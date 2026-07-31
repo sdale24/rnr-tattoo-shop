@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - RnR Tattoo Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <div class="login-container">
+        <h2>RnR Admin Portal</h2>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p id="error-msg" class="error"></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === 'rnr_admin' && pass === 'tattoos123') {
+                localStorage.setItem('rnr_logged_in', 'true');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                document.getElementById('error-msg').innerText = 'Incorrect username or password!';
+            }
+        });
+    </script>
+</body>
+</html>

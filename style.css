@@ -1,0 +1,555 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #f1f1f1;
+    overflow-x: hidden;
+}
+
+/* --- RESPONSIVE HEADER --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #282828;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-bg {
+    width: 40px;
+    height: 40px;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+}
+
+.shop-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.shop-name {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 35px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    color: #ff4757;
+}
+
+/* --- HERO SECTION NA MAY BACKGROUND AT TRANSPARENT LOGO WATERMARK --- */
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 60px 80px;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('B.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-image: url('B.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.08;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 2;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.9);
+}
+
+.hero p {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #ff4757;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #ff6b81;
+}
+
+/* --- FLOATING SOCIAL SIDEBAR SA KANAN (PC) --- */
+.social-sidebar {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 10;
+}
+
+.social-sidebar a {
+    width: 38px;
+    height: 38px;
+    background-color: #1a1a1a;
+    border: 1px solid #444;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.social-sidebar a:hover {
+    background-color: #ff4757;
+    border-color: #ff4757;
+}
+
+/* --- ABOUT & LOCATION SECTION SA HOMEPAGE --- */
+.about-location-section {
+    padding: 100px 50px;
+    background-color: #161616;
+    border-top: 1px solid #222;
+}
+
+.about-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: 1.5px;
+    color: #fff;
+}
+
+.about-text p {
+    font-size: 15px;
+    color: #bbb;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.location-details {
+    background: #1e1e1e;
+    padding: 20px;
+    border-left: 4px solid #ff4757;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.location-details p {
+    margin-bottom: 8px;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.location-details p:last-child {
+    margin-bottom: 0;
+}
+
+.about-image {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #333;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.about-image img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.about-image img:hover {
+    transform: scale(1.03);
+}
+
+/* --- GALLERY GRID --- */
+.page-section {
+    padding: 120px 20px 60px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-section h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #fff;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    background: #111;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #222;
+    border-radius: 4px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* --- LIGHTBOX / FULLSCREEN IMAGE MODAL NA MAY ARROWS --- */
+.lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.lightbox-modal img {
+    max-width: 80%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 10000;
+}
+
+.lightbox-close:hover {
+    color: #ff4757;
+}
+
+/* Next at Back Arrow Buttons */
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+    z-index: 10000;
+}
+
+.lightbox-arrow:hover {
+    background-color: #ff4757;
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+/* --- FORM STYLES --- */
+.styled-form {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    text-align: left;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #bbb;
+}
+
+.input-group input, .input-group select, .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    background: #121212;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.success {
+    color: #2ed573;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* --- ADMIN STYLING --- */
+.admin-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #121212;
+}
+
+.login-container, .dashboard-container {
+    background: #1a1a1a;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+
+.login-container {
+    max-width: 400px;
+}
+
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.btn-logout {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background-color: #ff4757;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th, td {
+    padding: 10px;
+    font-size: 13px;
+    text-align: left;
+}
+
+th {
+    background-color: #222;
+}
+
+.error {
+    color: #ff4757;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 12px 20px;
+        flex-direction: column;
+        position: relative;
+    }
+
+    nav {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 0 10px;
+        font-size: 12px;
+    }
+
+    .hero {
+        height: auto;
+        padding: 60px 20px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+        letter-spacing: 1px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .hero::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .social-sidebar {
+        display: none;
+    }
+
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .about-image img {
+        height: 250px;
+    }
+
+    .page-section {
+        padding: 40px 15px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .lightbox-arrow {
+        padding: 10px 15px;
+        font-size: 20px;
+    }
+    
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+}

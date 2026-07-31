@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Session - RnR Tattoo Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html" class="brand-link">
+                <div class="logo-bg">
+                    <img src="rnr.jpg" alt="RnR Tattoo Shop Logo" class="shop-logo">
+                </div>
+                <span class="shop-name">RnR TATTOO</span>
+            </a>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="booking.html">Book Now</a>
+        </nav>
+    </header>
+
+    <!-- Booking Section -->
+    <section class="page-section">
+        <h2>Book a Tattoo Session</h2>
+        <form id="booking-form" class="styled-form">
+            <div class="input-group">
+                <label for="client-name">full name</label>
+                <input type="text" id="client-name" required>
+            </div>
+            <div class="input-group">
+                <label for="client-email">Email or Contact Number</label>
+                <input type="text" id="client-email" required>
+            </div>
+            <div class="input-group">
+                <label for="preferred-artist">Choose an Artist</label>
+                <select id="preferred-artist" required>
+                    <option value="" disabled selected>-- Choose an Artist --</option>
+                    <option value="John Doe">Romel Ignacio (Realism)</option>
+                    <option value="Jane Smith">Louie Miguel (Traditional)</option>
+                    <option value="Mark Lee">Mark Lee (Black & Gray)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="booking-date">Date you want</label>
+                <input type="date" id="booking-date" required>
+            </div>
+            <div class="input-group">
+                <label for="booking-time">Time</label>
+                <select id="booking-time" required>
+                    <option value="" disabled selected>-- Pick a Time --</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="tattoo-idea">Details / Idea of your Tattoo</label>
+                <textarea id="tattoo-idea" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">submit Schedule Request</button>
+            <p id="booking-msg" class="success"></p>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
