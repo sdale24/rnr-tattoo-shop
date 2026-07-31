@@ -553,3 +553,25 @@ th {
         right: 10px;
     }
 }
+/* Responsive Fix para sa Social Sidebar sa Mobile / CP View */
+@media screen and (max-width: 768px) {
+    .social-sidebar {
+        position: static !important; /* Binabago mula sa floating patungo sa normal flow kapag naka-CP */
+        display: flex !important;
+        justify-content: center !important;
+        gap: 20px !important;
+        margin: 20px 0 !important;
+        background: transparent !important;
+    }
+
+    .social-sidebar a {
+        display: inline-block !important;
+        padding: 8px 15px !important;
+        background: #222 !important;
+        color: #fff !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+        border: 1px solid #444 !important;
+    }
+}
