@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - RnR Tattoo Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body" style="background: #121212; color: #fff; padding: 20px; font-family: sans-serif;">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h2>Admin Dashboard (Firebase DB)</h2>
+            <button id="logout-btn" style="background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Logout</button>
+        </div>
+
+        <!-- Uploader Section -->
+        <div style="background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #333;">
+            <h3>Upload New Tattoo to Gallery</h3>
+            <form id="upload-form" style="margin-top: 15px;">
+                <input type="file" id="tattoo-img" accept="image/*" required style="margin-bottom: 10px; display: block; color: white;">
+                <button type="submit" style="background: #e58e26; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Upload to Database</button>
+                <p id="success-msg" style="margin-top: 10px; color: #2ed573; font-weight: bold;"></p>
+            </form>
+        </div>
+
+        <!-- Gallery Section -->
+        <div style="background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #333;">
+            <h3>Gallery Photos</h3>
+            <div id="admin-gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                <p style="color: #777;">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <div style="background: #1e1e1e; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+            <h3>Bookings / Appointments</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #444; text-align: left; color: #aaa;">
+                        <th style="padding: 8px;">Name</th>
+                        <th style="padding: 8px;">Contact</th>
+                        <th style="padding: 8px;">Artist</th>
+                        <th style="padding: 8px;">Date & Time</th>
+                        <th style="padding: 8px;">Idea</th>
+                    </tr>
+                </thead>
+                <tbody id="appointments-list">
+                    <tr><td colspan="5" style="padding: 10px; text-align: center; color: #777;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase Realtime Database SDK (No Storage needed!) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+        import { getDatabase, ref as dbRef, set, push, get, remove } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEG4geh7KlAFqE5N1KtcAccCKlhcG-n-g",
+            authDomain: "rnr-tattoo-shop.firebaseapp.com",
+            projectId: "rnr-tattoo-shop",
+            storageBucket: "rnr-tattoo-shop.firebasestorage.app",
+            messagingSenderId: "799117419992",
+            appId: "1:799117419992:web:9fd467af02d5e7fceb3ead",
+            measurementId: "G-CXM69TRZ1T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        if(localStorage.getItem('rnr_logged_in') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('rnr_logged_in');
+            window.location.href = 'admin-login.html';
+        });
+
+        // Load Gallery galing sa Realtime Database
+        async function loadAdminGallery() {
+            const grid = document.getElementById('admin-gallery-grid');
+            try {
+                const snapshot = await get(dbRef(database, 'rnr_gallery'));
+                grid.innerHTML = '';
+                if(snapshot.exists()) {
+                    const data = snapshot.val();
+                    Object.keys(data).forEach((key) => {
+                        const item = data[key];
+                        grid.innerHTML += `
+                            <div style="background: #111; border: 1px solid #333; border-radius: 4px; overflow: hidden;">
+                                <img src="${item.image_url}" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+                                <button onclick="deleteGalleryItem('${key}')" style="width: 100%; background: #ff4757; color: white; border: none; padding: 5px; cursor: pointer; font-size: 12px;">DELETE</button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    grid.innerHTML = '<p style="color: #777;">No photos yet.</p>';
+                }
+            } catch(e) {
+                console.error("Error loading gallery:", e);
+            }
+        }
+
+        window.deleteGalleryItem = async function(key) {
+            if(confirm("Delete this photo?")) {
+                try {
+                    await remove(dbRef(database, 'rnr_gallery/' + key));
+                    loadAdminGallery();
+                } catch(e) {
+                    console.error("Error deleting:", e);
+                }
+            }
+        }
+
+        // Upload Form - Auto-compress and save directly to Database
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('tattoo-img');
+            const file = fileInput.files[0];
+            const msg = document.getElementById('success-msg');
+            if(!file) return;
+
+            msg.innerText = 'Compressing and uploading...';
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.src = evt.target.result;
+                img.onload = async function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_W = 350; // Liit at gaan para pasok na pasok sa database
+                    const scaleSize = MAX_W / img.width;
+                    canvas.width = MAX_W;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const base64 = canvas.toDataURL('image/jpeg', 0.4);
+
+                    try {
+                        const newGalleryRef = push(dbRef(database, 'rnr_gallery'));
+                        await set(newGalleryRef, {
+                            image_url: base64,
+                            created_at: Date.now()
+                        });
+
+                        msg.innerText = 'Uploaded successfully!';
+                        document.getElementById('upload-form').reset();
+                        loadAdminGallery();
+                        setTimeout(() => msg.innerText = '', 3000);
+                    } catch(err) {
+                        console.error(err);
+                        alert('Error saving image to database.');
+                        msg.innerText = '';
+                    }
+                }
+            }
+        });
+
+        // Load Appointments galing sa Realtime Database
+        async function loadAppointments() {
+            const list = document.getElementById('appointments-list');
+            try {
+                const snapshot = await get(dbRef(database, 'rnr_appointments'));
+                list.innerHTML = '';
+                if(snapshot.exists()) {
+                    const data = snapshot.val();
+                    Object.keys(data).forEach((key) => {
+                        const app = data[key];
+                        list.innerHTML += `
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 8px;">${app.name}</td>
+                                <td style="padding: 8px;">${app.contact}</td>
+                                <td style="padding: 8px;">${app.artist}</td>
+                                <td style="padding: 8px;">${app.date} (${app.time})</td>
+                                <td style="padding: 8px;">${app.idea}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    list.innerHTML = '<tr><td colspan="5" style="padding: 10px; text-align: center; color: #777;">No bookings found.</td></tr>';
+                }
+            } catch(e) {
+                console.error("Error loading appointments:", e);
+            }
+        }
+
+        loadAdminGallery();
+        loadAppointments();
+    </script>
+</body>
+</html>
