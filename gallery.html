@@ -25,16 +25,14 @@
     </header>
 
     <!-- Gallery Section -->
-    <section class="page-section">
-        <h2>Latest Works & Gallery</h2>
-        <div class="gallery-grid" id="dynamic-gallery">
-            <div class="gallery-item">
-                <img src="placeholder1.jpg" alt="Tattoo Work">
-                <p class="tattoo-caption">Sample Work by RnR</p>
-            </div>
+    <section class="page-section" style="padding: 40px 20px; background: #181818; color: #fff; min-height: 80vh;">
+        <h2 style="text-align: center; margin-bottom: 30px;">Latest Works & Gallery</h2>
+        <div class="gallery-grid" id="dynamic-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <p style="color: #777; text-align: center; grid-column: 1/-1;">Loading gallery...</p>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- Siguraduhing may type="module" -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
