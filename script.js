@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import { getDatabase, ref, get, push, set } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
 
-// Firebase Configuration (Siguraduhing pareho ito sa admin dashboard mo)
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAEG4geh7KlAFqE5N1KtcAccCKlhcG-n-g",
     authDomain: "rnr-tattoo-shop.firebaseapp.com",
@@ -13,7 +13,6 @@ const firebaseConfig = {
     measurementId: "G-CXM69TRZ1T"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             if(snapshot.exists()) {
                 const data = snapshot.val();
-                // I-convert ang Firebase object keys patungong array para madaling ma-loop
                 const galleryItems = Object.keys(data).map(key => data[key]);
                 
                 galleryGrid.innerHTML = '';
